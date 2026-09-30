@@ -1,0 +1,16 @@
+# 开发/测试依赖：只用于本机跑测试与静态检查，绝不要装进 AstrBot 运行环境。
+# 目标 AstrBot 4.28.2 要求 Python >= 3.12（.python-version = 3.12）。
+#
+# 安装（在插件工程根目录）：
+#   python -m venv .venv
+#   .venv/Scripts/python -m pip install -r requirements-dev.txt    # Windows
+#   .venv/bin/python     -m pip install -r requirements-dev.txt    # Linux/macOS
+#
+# requirements.txt（运行时依赖 httpx / aiosqlite）会由上面的命令一并安装，
+# 因为本文件把它们也列了出来，方便隔离环境直接跑完整测试。
+-r requirements.txt
+
+pytest>=8.3
+pytest-asyncio>=0.24
+ruff>=0.9
+pytest-timeout>=2.4

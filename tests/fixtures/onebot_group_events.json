@@ -1,0 +1,265 @@
+{
+  "_comment": "OneBot v11 群消息事件夹具（aiocqhttp 适配器 message 数组格式）。全部为假数据。",
+  "cases": {
+    "plain_single_line": {
+      "post_type": "message",
+      "message_type": "group",
+      "sub_type": "normal",
+      "self_id": 100000002,
+      "group_id": 123456789,
+      "user_id": 100000001,
+      "message_id": 40001,
+      "time": 1790000000,
+      "sender": {
+        "user_id": 100000001,
+        "nickname": "样例昵称",
+        "card": "样例群名片",
+        "role": "member"
+      },
+      "message": [
+        {"type": "text", "data": {"text": "/投稿 今天很开心"}}
+      ]
+    },
+    "multiline": {
+      "post_type": "message",
+      "message_type": "group",
+      "self_id": 100000002,
+      "group_id": 123456789,
+      "user_id": 100000001,
+      "message_id": 40002,
+      "time": 1790000001,
+      "sender": {"user_id": 100000001, "nickname": "样例昵称", "card": ""},
+      "message": [
+        {"type": "text", "data": {"text": "/投稿\n第一行 🎉\n第二行保留 空格"}}
+      ]
+    },
+    "leading_whitespace_and_trailing_whitespace": {
+      "post_type": "message",
+      "message_type": "group",
+      "self_id": 100000002,
+      "group_id": 123456789,
+      "user_id": 100000001,
+      "message_id": 40003,
+      "time": 1790000002,
+      "sender": {"user_id": 100000001, "nickname": "样例昵称"},
+      "message": [
+        {"type": "text", "data": {"text": "   /投稿   正文首尾有空白   "}}
+      ]
+    },
+    "at_self_then_command": {
+      "post_type": "message",
+      "message_type": "group",
+      "self_id": 100000002,
+      "group_id": 123456789,
+      "user_id": 100000001,
+      "message_id": 40004,
+      "time": 1790000003,
+      "sender": {"user_id": 100000001, "nickname": "样例昵称"},
+      "message": [
+        {"type": "at", "data": {"qq": "100000002"}},
+        {"type": "text", "data": {"text": " /投稿 唤醒形式"}}
+      ]
+    },
+    "at_other_in_body": {
+      "post_type": "message",
+      "message_type": "group",
+      "self_id": 100000002,
+      "group_id": 123456789,
+      "user_id": 100000001,
+      "message_id": 40005,
+      "time": 1790000004,
+      "sender": {"user_id": 100000001, "nickname": "样例昵称"},
+      "message": [
+        {"type": "text", "data": {"text": "/投稿 想说给"}},
+        {"type": "at", "data": {"qq": "100000009"}},
+        {"type": "text", "data": {"text": "听"}}
+      ]
+    },
+    "image_only": {
+      "post_type": "message",
+      "message_type": "group",
+      "self_id": 100000002,
+      "group_id": 123456789,
+      "user_id": 100000001,
+      "message_id": 40006,
+      "time": 1790000005,
+      "sender": {"user_id": 100000001, "nickname": "样例昵称"},
+      "message": [
+        {"type": "image", "data": {"file": "sample.jpg", "url": "https://example.invalid/x.jpg"}}
+      ]
+    },
+    "text_then_image": {
+      "post_type": "message",
+      "message_type": "group",
+      "self_id": 100000002,
+      "group_id": 123456789,
+      "user_id": 100000001,
+      "message_id": 40007,
+      "time": 1790000006,
+      "sender": {"user_id": 100000001, "nickname": "样例昵称"},
+      "message": [
+        {"type": "text", "data": {"text": "/投稿 带图的文字"}},
+        {"type": "image", "data": {"file": "sample.jpg"}}
+      ]
+    },
+    "command_with_face": {
+      "post_type": "message",
+      "message_type": "group",
+      "self_id": 100000002,
+      "group_id": 123456789,
+      "user_id": 100000001,
+      "message_id": 40008,
+      "time": 1790000007,
+      "sender": {"user_id": 100000001, "nickname": "样例昵称"},
+      "message": [
+        {"type": "text", "data": {"text": "/投稿 表情"}},
+        {"type": "face", "data": {"id": "14"}}
+      ]
+    },
+    "command_with_reply": {
+      "post_type": "message",
+      "message_type": "group",
+      "self_id": 100000002,
+      "group_id": 123456789,
+      "user_id": 100000001,
+      "message_id": 40009,
+      "time": 1790000008,
+      "sender": {"user_id": 100000001, "nickname": "样例昵称"},
+      "message": [
+        {"type": "reply", "data": {"id": "39999"}},
+        {"type": "text", "data": {"text": "/投稿 引用后投稿"}}
+      ]
+    },
+    "command_with_forward": {
+      "post_type": "message",
+      "message_type": "group",
+      "self_id": 100000002,
+      "group_id": 123456789,
+      "user_id": 100000001,
+      "message_id": 40010,
+      "time": 1790000009,
+      "sender": {"user_id": 100000001, "nickname": "样例昵称"},
+      "message": [
+        {"type": "text", "data": {"text": "/投稿 转发内容"}},
+        {"type": "forward", "data": {"id": "forward-1"}}
+      ]
+    },
+    "literal_cq_text": {
+      "post_type": "message",
+      "message_type": "group",
+      "self_id": 100000002,
+      "group_id": 123456789,
+      "user_id": 100000001,
+      "message_id": 40011,
+      "time": 1790000010,
+      "sender": {"user_id": 100000001, "nickname": "样例昵称"},
+      "message": [
+        {"type": "text", "data": {"text": "/投稿 字面量 [CQ:at,qq=100000009] 不是真附件"}}
+      ]
+    },
+    "empty_command": {
+      "post_type": "message",
+      "message_type": "group",
+      "self_id": 100000002,
+      "group_id": 123456789,
+      "user_id": 100000001,
+      "message_id": 40012,
+      "time": 1790000011,
+      "sender": {"user_id": 100000001, "nickname": "样例昵称"},
+      "message": [
+        {"type": "text", "data": {"text": "/投稿"}}
+      ]
+    },
+    "empty_command_spaces": {
+      "post_type": "message",
+      "message_type": "group",
+      "self_id": 100000002,
+      "group_id": 123456789,
+      "user_id": 100000001,
+      "message_id": 40013,
+      "time": 1790000012,
+      "sender": {"user_id": 100000001, "nickname": "样例昵称"},
+      "message": [
+        {"type": "text", "data": {"text": "/投稿   "}}
+      ]
+    },
+    "command_prefix_box": {
+      "post_type": "message",
+      "message_type": "group",
+      "self_id": 100000002,
+      "group_id": 123456789,
+      "user_id": 100000001,
+      "message_id": 40014,
+      "time": 1790000013,
+      "sender": {"user_id": 100000001, "nickname": "样例昵称"},
+      "message": [
+        {"type": "text", "data": {"text": "/投稿箱"}}
+      ]
+    },
+    "command_prefix_no_space": {
+      "post_type": "message",
+      "message_type": "group",
+      "self_id": 100000002,
+      "group_id": 123456789,
+      "user_id": 100000001,
+      "message_id": 40015,
+      "time": 1790000014,
+      "sender": {"user_id": 100000001, "nickname": "样例昵称"},
+      "message": [
+        {"type": "text", "data": {"text": "/投稿你好"}}
+      ]
+    },
+    "command_inside_sentence": {
+      "post_type": "message",
+      "message_type": "group",
+      "self_id": 100000002,
+      "group_id": 123456789,
+      "user_id": 100000001,
+      "message_id": 40016,
+      "time": 1790000015,
+      "sender": {"user_id": 100000001, "nickname": "样例昵称"},
+      "message": [
+        {"type": "text", "data": {"text": "我想/投稿 内容是别的插件指令"}}
+      ]
+    },
+    "plain_chat": {
+      "post_type": "message",
+      "message_type": "group",
+      "self_id": 100000002,
+      "group_id": 123456789,
+      "user_id": 100000001,
+      "message_id": 40017,
+      "time": 1790000016,
+      "sender": {"user_id": 100000001, "nickname": "样例昵称"},
+      "message": [
+        {"type": "text", "data": {"text": "大家晚上好"}}
+      ]
+    },
+    "other_command": {
+      "post_type": "message",
+      "message_type": "group",
+      "self_id": 100000002,
+      "group_id": 123456789,
+      "user_id": 100000001,
+      "message_id": 40018,
+      "time": 1790000017,
+      "sender": {"user_id": 100000001, "nickname": "样例昵称"},
+      "message": [
+        {"type": "text", "data": {"text": "/help"}}
+      ]
+    },
+    "negative_message_id": {
+      "post_type": "message",
+      "message_type": "group",
+      "self_id": 100000002,
+      "group_id": 123456789,
+      "user_id": 100000001,
+      "message_id": -1234567890,
+      "time": 1790000018,
+      "sender": {"user_id": 100000001, "nickname": "样例昵称"},
+      "message": [
+        {"type": "text", "data": {"text": "/投稿 负消息号"}}
+      ]
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "_comment": "插件侧契约夹具：字段与 contracts/examples/ingest_request.json、docs/API.md §3 一致。所有 QQ 号/群号/消息号均为假数据。",
+  "event_id": "thp-demo-2026",
+  "bot_id": "100000002",
+  "group_id": "123456789",
+  "source_message_id": "40001",
+  "qq_id": "100000001",
+  "nickname": "样例昵称",
+  "group_card": "样例群名片",
+  "content": "第一行投稿正文 🎉\n第二行也要保留 ✨",
+  "source_timestamp": "2026-10-03T10:00:00Z"
+}

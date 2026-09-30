@@ -1,0 +1,115 @@
+{
+  "enabled": {
+    "description": "启用投稿接收",
+    "type": "bool",
+    "default": false,
+    "hint": "必须显式打开。关闭时插件仍然会被 AstrBot 加载，但不接收任何群消息、不写入队列；填好 backend_url / ingest_token / event_id / allowed_group_ids 后再打开。"
+  },
+  "backend_url": {
+    "description": "后端网站地址（origin）",
+    "type": "string",
+    "default": "",
+    "obvious_hint": true,
+    "hint": "只填网站源地址，例如 http://203.0.113.10:18080（可带端口）。不要填 /host、/screen、/api/v1/... 等路径，不要带用户名密码、?query 或 #fragment，结尾不要加斜杠。支持 http 与 https。"
+  },
+  "ingest_token": {
+    "description": "投稿令牌 INGEST_TOKEN",
+    "type": "string",
+    "default": "",
+    "secret": true,
+    "obvious_hint": true,
+    "hint": "只填后端环境变量 INGEST_TOKEN 的值。不要填写 HOST_TOKEN 或 DISPLAY_TOKEN：本插件不会上屏、不查询主持数据。密钥仅保存在 AstrBot 的插件配置文件中，请勿截图或转存到群聊。"
+  },
+  "event_id": {
+    "description": "活动标识 event_id",
+    "type": "string",
+    "default": "",
+    "obvious_hint": true,
+    "hint": "与后端环境变量 EVENT_ID 完全一致，例如 thp-2026。规则：字母或数字开头，其后可含字母、数字、点、下划线、连字符，最长 64 字符。活动改变后旧队列不会自动投递到新活动。"
+  },
+  "allowed_group_ids": {
+    "description": "允许投稿的 QQ 群号",
+    "type": "list",
+    "default": [],
+    "hint": "字符串列表，例如 [\"123456789\"]。留空表示不接收任何群的投稿（不会报错）。只有列表内的群才会被处理，其他群、私聊、机器人自己的消息一律静默忽略。"
+  },
+  "tls_verify": {
+    "description": "校验后端 HTTPS 证书",
+    "type": "bool",
+    "default": true,
+    "hint": "默认开启。仅在自签名 HTTPS 证书且无法签发正式证书时临时关闭；该开关只作用于本插件访问上面 backend_url 的客户端，不修改 AstrBot 全局 SSL 设置，也不影响其他插件。使用 http:// 时此项无意义。"
+  },
+  "use_env_proxy": {
+    "description": "允许继承系统 HTTP 代理环境变量",
+    "type": "bool",
+    "default": false,
+    "hint": "默认关闭（httpx trust_env=False），避免容器内偶然存在的 HTTP_PROXY/HTTPS_PROXY 把投稿请求导向不可达代理。只有在确实需要通过代理访问后端时才打开。"
+  },
+  "connect_timeout_seconds": {
+    "description": "连接超时（秒）",
+    "type": "float",
+    "default": 3.0,
+    "hint": "建立 TCP/TLS 连接的最大等待时间，允许范围 0.5–30。与下面的总超时相互独立。"
+  },
+  "request_timeout_seconds": {
+    "description": "单次请求总超时（秒）",
+    "type": "float",
+    "default": 10.0,
+    "hint": "httpx 的总时限：连接、写入、读取各阶段共享这段时间，允许范围 1–120。它是单次 HTTP 尝试的上限，不是整条投稿的重试期限（重试期限见 delivery_ttl_seconds）。"
+  },
+  "max_attempts": {
+    "description": "单条投稿最大尝试次数",
+    "type": "int",
+    "default": 20,
+    "hint": "包含第一次发送。达到该次数即终止该稿的自动重试。允许范围 1–100。"
+  },
+  "delivery_ttl_seconds": {
+    "description": "投稿投递期限（秒）",
+    "type": "int",
+    "default": 600,
+    "hint": "从首次入队时刻起算（默认 600 秒 = 10 分钟）。到期即停止重试，到期时间不会因为插件重启而重新计算。允许范围 30–86400。"
+  },
+  "queue_capacity": {
+    "description": "待投队列容量",
+    "type": "int",
+    "default": 1000,
+    "hint": "处于 pending / inflight 状态的活动投稿上限。达到上限时新投稿会被明确拒绝（不会覆盖旧稿）。允许范围 10–100000。"
+  },
+  "user_interval_seconds": {
+    "description": "每人投稿最小间隔（秒）",
+    "type": "int",
+    "default": 10,
+    "hint": "作用域：同一个群里同一个 QQ 号。只对真正新入队的投稿计数，重复事件与重试不计数；0 表示关闭。允许范围 0–600。后端仍会独立限流，插件本地限流只是为了更早给出反馈。"
+  },
+  "group_per_minute": {
+    "description": "每群每分钟投稿上限",
+    "type": "int",
+    "default": 60,
+    "hint": "作用域：单个允许群的滚动 60 秒窗口，统计该群所有投稿人的新投稿。0 表示关闭。允许范围 0–100000。"
+  },
+  "initial_reply_wait_seconds": {
+    "description": "首次回执等待时间（秒）",
+    "type": "float",
+    "default": 8.0,
+    "hint": "群消息进入后，最多等待这么久来尝试拿到后端编号。超时则回复“已暂存，将自动重试”，后台继续投递并在成功后补发编号。允许范围 1–25；建议明显小于 request_timeout_seconds 的重试轮数总和。"
+  },
+  "defer_notice_delay_seconds": {
+    "description": "暂存提示延迟发送（秒）",
+    "type": "float",
+    "default": 5.0,
+    "hint": "“网络暂时异常，投稿已暂存”这条提示不会立刻发出：先等这么久，若期间投稿已经成功，则只发送成功编号，避免同一稿先报暂存再报成功。允许范围 0–20。"
+  },
+  "log_level": {
+    "description": "插件日志级别",
+    "type": "string",
+    "default": "INFO",
+    "options": ["DEBUG", "INFO", "WARNING", "ERROR"],
+    "hint": "DEBUG 会打印每次投递尝试与分类结果（不含令牌与完整正文）。排查现场问题时临时打开。"
+  },
+  "command_name": {
+    "description": "投稿指令名",
+    "type": "string",
+    "default": "投稿",
+    "hint": "默认 /投稿。首版建议保持默认；修改后必须同时告知观众使用新指令。指令名不能包含空格。"
+  }
+}

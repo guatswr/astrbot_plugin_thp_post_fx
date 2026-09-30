@@ -1,0 +1,20 @@
+{
+  "_comment": "201 新建成功（与 contracts/examples/ingest_response_201_new.json 同结构，编号/时间改为夹具值）。",
+  "duplicate": false,
+  "submission": {
+    "id": 321,
+    "event_id": "thp-demo-2026",
+    "qq_id": "100000001",
+    "display_name": "样例群名片",
+    "nickname": "样例昵称",
+    "group_card": "样例群名片",
+    "avatar_url": "/api/v1/avatars/100000001",
+    "content": "第一行投稿正文 🎉\n第二行也要保留 ✨",
+    "source_timestamp": "2026-10-03T10:00:00.000Z",
+    "created_at": "2026-09-29T18:16:44.318Z",
+    "updated_at": "2026-09-29T18:16:44.318Z",
+    "is_read": false,
+    "is_hidden": false,
+    "selected": false
+  }
+}

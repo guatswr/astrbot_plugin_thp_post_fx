@@ -1,0 +1,34 @@
+{
+  "_comment": "OneBot 消息段数组夹具（直接喂给 services.parser.parse_submission）。",
+  "cases": {
+    "voice_only": [
+      {"type": "record", "data": {"file": "sample.amr"}}
+    ],
+    "file_only": [
+      {"type": "file", "data": {"file": "sample.pdf", "name": "sample.pdf"}}
+    ],
+    "video_only": [
+      {"type": "video", "data": {"file": "sample.mp4"}}
+    ],
+    "at_all_prefix": [
+      {"type": "at", "data": {"qq": "all"}},
+      {"type": "text", "data": {"text": " /投稿 全体提醒"}}
+    ],
+    "at_other_prefix": [
+      {"type": "at", "data": {"qq": "100000009"}},
+      {"type": "text", "data": {"text": " /投稿 先说别人"}}
+    ],
+    "command_then_voice": [
+      {"type": "text", "data": {"text": "/投稿 语音"}},
+      {"type": "record", "data": {"file": "sample.amr"}}
+    ],
+    "unknown_segment_after_command": [
+      {"type": "text", "data": {"text": "/投稿 未知段"}},
+      {"type": "mface", "data": {"emoji_id": "5"}}
+    ],
+    "leading_space_then_text": [
+      {"type": "text", "data": {"text": "  "}},
+      {"type": "text", "data": {"text": "/投稿 两个文本段"}}
+    ]
+  }
+}

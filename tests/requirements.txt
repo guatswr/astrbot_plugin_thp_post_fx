@@ -1,0 +1,4 @@
+"""Optional dependency: httpx (used only by test_plugin_flow.py).
+
+Kept separate so the core unit tests run with the standard library plus pytest.
+"""

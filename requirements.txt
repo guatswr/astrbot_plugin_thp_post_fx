@@ -1,0 +1,11 @@
+# THP 投稿插件运行时依赖（在 AstrBot 自身的 Python 环境里安装）。
+#
+# 设计原则：只声明、不强制升级 AstrBot 共享环境里已有的包。
+#   * 不写死版本号，只给"至少需要"的下界；
+#   * 下界与 AstrBot 4.28.2 的 pyproject.toml 保持一致，避免 pip 反向降级/升级；
+#   * 不声明 AstrBot 本体已依赖的包（fastapi/pydantic/sqlalchemy/loguru 等）。
+#
+# 说明：httpx 与 aiosqlite 都是 AstrBot（>=4.16）自身依赖，通常无需重新下载。
+httpx>=0.28.1
+aiosqlite>=0.21.0
+filelock>=3.18.0

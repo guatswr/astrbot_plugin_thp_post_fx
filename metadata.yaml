@@ -1,0 +1,14 @@
+name: astrbot_plugin_thp_post
+display_name: THP 群投稿
+short_desc: 把指定 QQ 群的 /投稿 纯文本可靠地送到 THP 活动云后端
+desc: >-
+  监听 NapCat / OneBot v11 的指定群消息，识别无需 @ 机器人的 /投稿 纯文本指令，
+  提取真实 QQ 号、昵称、群名片、群号、机器人号与原始消息 ID，先写入插件数据目录下的
+  SQLite outbox，再异步提交到 THP 云后端。支持幂等入库、有限重试、插件重启后继续投递
+  与明确的群内回执。投稿成功仅代表已送达主持管理端，不代表已经上屏。
+version: 1.0.0
+author: THP-POST-FIX-maintainer
+repo: null
+support_platforms:
+  - aiocqhttp
+astrbot_version: ">=4.28.2,<5"
